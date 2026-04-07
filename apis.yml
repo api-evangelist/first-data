@@ -1,7 +1,12 @@
 aid: first-data
-url: https://raw.githubusercontent.com/api-evangelist/first-data/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/first-data/refs/heads/main/apis.yml
 modified: '2026-03-24'
 apis: []
 common:
   - type: Website
     url: https://www.first-data.com
+description: >-
+  First Data was a global payment technology solutions company providing merchant
+  transaction processing, financial institution services, and prepaid services before
+  merging with Fiserv.
