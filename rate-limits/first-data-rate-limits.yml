@@ -4,85 +4,44 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: First Data (Fiserv)
 providerId: first-data
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - Payments
   - Merchant Services
   - Financial Services
   - Transaction Processing
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the First Data (Fiserv) API surface. Captures
-  per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values
-  to be replaced with published provider limits.
+description: Fiserv (parent of First Data) does not publish numeric rate limits for Commerce Hub or other developer APIs. Production throttling is set per merchant agreement and capacity profile. Standard HTTP 429/503 throttling responses apply, and idempotency is supported via Client-Request-Id headers on Commerce Hub APIs.
+notes: No public RPS/RPM numbers documented at developer.fiserv.com. Per-merchant throttles are negotiated. Scaffold trimmed to one umbrella entry pointing to docs.
+sources:
+  - https://developer.fiserv.com/
+  - https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/Guides/Idempotency.md
+  - https://docs.fiserv.dev/public/reference/apis
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
+  requestId: Client-Request-Id
   retryAfter: Retry-After
-  policy: RateLimit-Policy
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
+  - name: Commerce Hub / Carat per-merchant throttle
+    scope: merchant/api-key
+    metric: varies
+    limit: per-merchant agreement; not publicly published
     applies:
-      - Fiserv Developer (First Data Legacy)
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Fiserv Developer (First Data Legacy)
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Fiserv Developer (First Data Legacy)
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Fiserv Developer (First Data Legacy)
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
+      - Fiserv Commerce Hub
+      - Fiserv Carat
       - Fiserv Developer (First Data Legacy)
 policies:
+  - name: Idempotency
+    description: Commerce Hub supports idempotency via Client-Request-Id; retries with the same key return the original response within the idempotency window.
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: Clients should implement exponential backoff with jitter on 429 / 5xx responses and honor Retry-After when present.
+  - name: Per-Merchant Throttling
+    description: Throttles are sized per merchant onboarding; raise limits via Fiserv account/support team rather than self-service.
+  - name: Settlement Cutoff Pressure
+    description: Volume near daily settlement cutoffs may experience tighter throttling; size batches and retries accordingly.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
