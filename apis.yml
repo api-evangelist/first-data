@@ -39,6 +39,10 @@ apis:
       Payeezy, and Bolt for merchant payment acceptance, tokenization, and
       transaction processing.
 common:
+  - type: GitHubOrganization
+    url: https://github.com/firstdata
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/first-data-corporation
   - type: Website
     url: https://www.fiserv.com
   - type: DeveloperPortal
