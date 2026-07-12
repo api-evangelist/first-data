@@ -40,6 +40,8 @@ apis:
       Payeezy, and Bolt for merchant payment acceptance, tokenization, and
       transaction processing.
 common:
+  - type: DomainSecurity
+    url: security/first-data-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/firstdata
   - type: LinkedIn
