@@ -1,0 +1,98 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  First Data's own First Data Gateway (IPG) client libraries, published by the
+  GBSEcom organization: https://github.com/GBSEcom/java (README) and
+  https://github.com/GBSEcom/Python (simple/signature.py, simple/client_context.py,
+  openapi_client/api/*.py parameter documentation).
+docs: https://developer.fiserv.com/product/IPGNA/
+note: >-
+  The First Data Gateway publishes no OpenAPI document at any reachable URL (see
+  the contract-discovery record in this repo's apis.yml x-coverage block), so this
+  profile is read from the generated client libraries First Data itself published,
+  which carry the scheme names, header names, signing algorithm and parameter
+  descriptions verbatim from the source specification.
+summary:
+  types: [apiKey, http]
+  api_key_in: [header]
+  oauth2_flows: []
+  request_signing: hmac-sha256
+schemes:
+  - name: Api-Key
+    type: apiKey
+    in: header
+    parameter: Api-Key
+    required: true
+    description: >-
+      "Key given to merchant after boarding associating their requests with the
+      appropriate app in Apigee." Issued per merchant at onboarding; the gateway
+      fronts on Apigee.
+    sources: [https://github.com/GBSEcom/Python]
+  - name: Message-Signature
+    type: http
+    scheme: hmac
+    algorithm: HMAC-SHA256
+    encoding: base64
+    parameter: Message-Signature
+    required: true
+    description: >-
+      "Used to ensure the request has not been tampered with during transmission.
+      The Message-Signature is the Base64 encoded HMAC hash (SHA256 algorithm with
+      the API Secret as the key)." The signed string is the concatenation
+      Api-Key + Client-Request-Id + Timestamp + the JSON request body.
+    sources: [https://github.com/GBSEcom/Python]
+  - name: Authorization
+    type: http
+    scheme: bearer
+    parameter: Authorization
+    required: false
+    description: >-
+      Bearer access token obtained from POST /v2/authentication/access-tokens.
+      Used for the browser/client-side flows (payment tokens, hosted payment
+      pages) so that the API Secret never leaves the merchant server.
+    sources: [https://github.com/GBSEcom/Python]
+required_headers:
+  - name: Content-Type
+    description: application/json
+  - name: Client-Request-Id
+    description: >-
+      "A client-generated ID for request tracking and signature creation, unique
+      per request. This is also used for idempotency control. We recommend 128-bit
+      UUID format."
+  - name: Api-Key
+    description: Merchant API key issued at boarding.
+  - name: Timestamp
+    description: >-
+      "Epoch timestamp in milliseconds in the request from a client system. Used
+      for Message Signature generation and time limit (5 mins)."
+  - name: Message-Signature
+    description: Base64-encoded HMAC-SHA256 of Api-Key + Client-Request-Id + Timestamp + body.
+  - name: Region
+    required: false
+    description: >-
+      "Indicates the region where the client wants the transaction to be
+      processed. This will override the default processing region identified for
+      the client. Available options are argentina, brazil, germany, india and
+      northamerica."
+credentials:
+  - name: API Key
+    issued_at: merchant boarding
+  - name: API Secret
+    issued_at: merchant boarding
+    use: HMAC signing key only; never transmitted
+token_endpoint:
+  operation: POST /v2/authentication/access-tokens
+  description: Generate an access token for client-side/browser authentication.
+  request_fields: [domain, token, publicKeyRequired]
+environments:
+  - name: production
+    base_url: https://prod.api.firstdata.com/gateway/v2
+  - name: certification
+    base_url: https://cert.api.firstdata.com/gateway/v2
+    note: The SDKs default to the certification (sandbox) host.
+gaps:
+  - No OAuth 2.0 or OpenID Connect surface is documented for the First Data Gateway.
+  - No scope model exists, so this repo carries no scopes/ artifact.
+  - >-
+    Credentials cannot be obtained self-service; an API Key and API Secret are
+    issued only through merchant boarding, which is a sales-gated process.

@@ -1,0 +1,168 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  First Data's own First Data Gateway (IPG) client libraries published by the
+  GBSEcom organization — https://github.com/GBSEcom/java (README, endpoint table)
+  and https://github.com/GBSEcom/Python (simple/signature.py,
+  simple/client_context.py, docs/*.md model reference, openapi_client/api/*.py
+  parameter documentation). Every quoted string below appears verbatim in that
+  first-party material.
+docs: https://developer.fiserv.com/product/IPGNA/
+api: First Data Gateway (IPG) v2, API version 21.5.0
+authentication:
+  style: api-key + HMAC request signature
+  headers: [Api-Key, Timestamp, Message-Signature, Client-Request-Id]
+  detail: authentication/first-data-authentication.yml
+idempotency:
+  supported: true
+  coverage: full
+  mechanism: header
+  header: Client-Request-Id
+  required: true
+  format: 128-bit UUID recommended
+  evidence: >-
+    "A client-generated ID for request tracking and signature creation, unique per
+    request. This is also used for idempotency control. We recommend 128-bit UUID
+    format." — parameter description carried in every operation of the First Data
+    Gateway SDKs (github.com/GBSEcom/Python, openapi_client/api/*.py).
+  scope_note: >-
+    Client-Request-Id is a REQUIRED header on all 25 published operations, not an
+    opt-in on selected writes, which is why coverage is recorded as full rather
+    than partial.
+  retention: unknown
+  retention_note: >-
+    The replay/dedupe retention window is not published anywhere reachable. The
+    only stated time bound on the request is the Timestamp header's 5-minute
+    signature validity, which is a signing freshness limit and NOT an idempotency
+    window; do not read it as one.
+reversibility:
+  grade: documented
+  grade_basis: >-
+    Reversal operations are published for every money-moving write, but no
+    document reachable without merchant credentials states the window inside which
+    any of them works. Under the 0.12.0 rubric that is `documented` (0.4), not
+    `verified` (1.0) — a window has deliberately not been asserted.
+  write_surfaces:
+    - operation: primaryPaymentTransaction
+      method: POST
+      path: /v2/payments
+      reversal: voidTransaction
+      reversal_operation: POST /v2/payments/{transaction-id}/void
+      reversal_description: Reverse a previous action on an existing transaction.
+      window: null
+      window_source: null
+    - operation: primaryPaymentTransaction
+      method: POST
+      path: /v2/payments
+      reversal: returnTransaction
+      reversal_operation: POST /v2/payments/{transaction-id}/return
+      reversal_description: Return/refund a transaction.
+      window: null
+      window_source: null
+    - operation: orderPostAuth
+      method: POST
+      path: /v2/orders/{order-id}/postauth
+      reversal: orderReturnTransaction
+      reversal_operation: POST /v2/orders/{order-id}/return
+      reversal_description: Return/refund an order.
+      window: null
+      window_source: null
+    - operation: createPaymentSchedule
+      method: POST
+      path: /v2/payment-schedules
+      reversal: cancelPaymentSchedule
+      reversal_operation: DELETE /v2/payment-schedules/{order-id}
+      reversal_description: Cancel a gateway payment schedule.
+      window: null
+      window_source: null
+    - operation: createPaymentToken
+      method: POST
+      path: /v2/payment-tokens
+      reversal: deletePaymentToken
+      reversal_operation: DELETE /v2/payment-tokens/{token-id}
+      reversal_description: Delete a payment token.
+      window: null
+      window_source: null
+    - operation: createPaymentUrl
+      method: POST
+      path: /v2/payment-url
+      reversal: deletePaymentUrl
+      reversal_operation: DELETE /v2/payment-url
+      reversal_description: Delete a payment URL.
+      window: null
+      window_source: null
+  note: >-
+    A transaction reaching the SETTLED state can no longer be voided and must be
+    returned instead — that is implied by the published transaction states
+    (AUTHORIZED, CAPTURED, DECLINED, CHECKED, COMPLETED_GET, INITIALIZED, PENDING,
+    READY, TEMPLATE, SETTLED, VOIDED, WAITING) but is NOT stated as a rule in any
+    document reachable here, so it is recorded as an observation, not a contract.
+dry_run_mode:
+  supported: false
+  note: >-
+    No dry-run / simulate flag is published. The separation is environmental: the
+    certification host cert.api.firstdata.com is where rehearsal happens. See
+    sandbox/first-data-sandbox.yml.
+pagination:
+  style: none
+  note: >-
+    The 25 published operations are transaction-oriented (create, inquire by id,
+    capture, return, void). No collection-listing operation exists, so there is no
+    pagination contract to record. This is `na`, not a gap.
+field_expansion:
+  supported: false
+metadata:
+  supported: true
+  note: >-
+    Transactions carry additional detail objects (AdditionalDetails,
+    AdditionalTransactionDetails, Basket/BasketItem, industry-specific Airline and
+    CarRental blocks) rather than a free-form metadata map.
+request_tracing:
+  request_id_header: Client-Request-Id
+  echoed_in_response: true
+  echo_field: clientRequestId
+  echo_description: Echoes back the value in the request header for tracking.
+  server_trace_field: apiTraceId
+  server_trace_description: >-
+    "Request identifier in API, can be used to request logs from the support
+    team." — the field an agent should capture and quote when escalating.
+versioning:
+  scheme: uri-path
+  current: v2
+  api_version: 21.5.0
+  detail: lifecycle/first-data-lifecycle.yml
+error_envelope:
+  format: vendor
+  rfc9457: false
+  content_type: application/json
+  shape:
+    clientRequestId: Echoes back the value in the request header for tracking.
+    apiTraceId: Request identifier in API, can be used to request logs from the support team.
+    responseType: Result classification for the request.
+    error:
+      code: Uniquely identifies an error condition. Client applications need to read and handle errors based on this.
+      message: A generic description of the error condition.
+      details: Detailed information about message format errors.
+      declineReasonCode: Information about the decline reason.
+  detail: errors/first-data-problem-types.yml
+rate_limit_signaling:
+  published: false
+  detail: rate-limits/first-data-rate-limits.yml
+  note: >-
+    No RateLimit-* or X-RateLimit-* response header is documented for the First
+    Data Gateway. Throttles are set per merchant agreement.
+regionalization:
+  header: Region
+  values: [argentina, brazil, germany, india, northamerica]
+  description: >-
+    "Indicates the region where the client wants the transaction to be processed.
+    This will override the default processing region identified for the client.
+    Region specific store setup and APIGEE boarding is required in order to use an
+    alternate region for processing."
+cross_links:
+  authentication: authentication/first-data-authentication.yml
+  errors: errors/first-data-problem-types.yml
+  decline_codes: errors/first-data-decline-codes.yml
+  lifecycle: lifecycle/first-data-lifecycle.yml
+  sandbox: sandbox/first-data-sandbox.yml
+  rate_limits: rate-limits/first-data-rate-limits.yml

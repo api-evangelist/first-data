@@ -33,7 +33,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-data.png
 access: 3rd-Party
 created: '2025-03-01'
-modified: '2026-04-28'
+modified: '2026-09-09'
 position: Consuming
 tags:
   - Payments
@@ -63,11 +63,49 @@ apis:
         type: DeveloperPortal
       - url: https://developer.fiserv.com
         type: Documentation
+      - url: https://developer.fiserv.com/support
+        type: Support
     description: >-
       Following the Fiserv merger, legacy First Data API products are now
       hosted on the Fiserv developer portal. These include Commerce Hub,
       Payeezy, and Bolt for merchant payment acceptance, tokenization, and
       transaction processing.
+  - aid: first-data:first-data-gateway
+    name: First Data Gateway (IPG)
+    tags:
+      - Payments
+      - Merchant Services
+      - Transaction Processing
+      - Tokenization
+      - Fraud
+    humanURL: https://developer.fiserv.com/product/IPGNA
+    baseURL: https://prod.api.firstdata.com/gateway/v2
+    properties:
+      - url: https://developer.fiserv.com/product/IPGNA
+        type: APIReference
+      - url: https://github.com/GBSEcom
+        type: SourceCode
+      - url: authentication/first-data-authentication.yml
+        type: Authentication
+      - url: conventions/first-data-conventions.yml
+        type: Conventions
+      - url: errors/first-data-problem-types.yml
+        type: ErrorCatalog
+      - url: errors/first-data-decline-codes.yml
+        type: DeclineCodes
+      - url: sandbox/first-data-sandbox.yml
+        type: Sandbox
+    description: >-
+      The First Data Gateway, marketed by Fiserv as the Internet Payment Gateway
+      (IPG) and documented on the Fiserv developer portal as the IPGNA product.
+      A card, ACH and wallet transaction API covering payments, orders, payment
+      schedules, tokenization, hosted payment URLs, card and account
+      verification, dynamic currency conversion and fraud scoring. Production is
+      https://prod.api.firstdata.com/gateway/v2 and certification is
+      https://cert.api.firstdata.com/gateway/v2; both base URLs are read from
+      First Data's own published client libraries at github.com/GBSEcom, since
+      no OpenAPI document is served at any reachable URL. API version 21.5.0.
+      Authentication is an Api-Key header plus an HMAC-SHA256 Message-Signature.
 common:
   - type: DomainSecurity
     url: security/first-data-domain-security.yml
@@ -79,6 +117,49 @@ common:
     url: https://www.fiserv.com
   - type: DeveloperPortal
     url: https://developer.fiserv.com
+  - type: Packages
+    url: packages/first-data-packages.yml
+  - type: SDKs
+    url: packages/first-data-packages.yml
+  - type: Authentication
+    url: authentication/first-data-authentication.yml
+  - type: Conventions
+    url: conventions/first-data-conventions.yml
+  - type: Idempotency
+    url: conventions/first-data-conventions.yml
+  - type: ErrorCatalog
+    url: errors/first-data-problem-types.yml
+  - type: DeclineCodes
+    url: errors/first-data-decline-codes.yml
+  - type: Lifecycle
+    url: lifecycle/first-data-lifecycle.yml
+  - type: Deprecation
+    url: lifecycle/first-data-lifecycle.yml
+  - type: Sandbox
+    url: sandbox/first-data-sandbox.yml
+  - type: Components
+    url: components/first-data-components.yml
+  - type: Conformance
+    url: conformance/first-data-conformance.yml
+  - type: LLMsTxt
+    url: llms/first-data-llms.txt
+  - type: Plans
+    url: plans/first-data-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/first-data-rate-limits.yml
+  - type: APIReference
+    url: https://developer.fiserv.com/product/IPGNA
+  - type: Support
+    url: https://developer.fiserv.com/support
+  - type: DataModel
+    url: data-model/first-data-data-model.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-09'
+  status: enriched
+  artifacts_added: 12
+  pass: local-v3
+x-parent: fiserv
+x-relationship: acquisition

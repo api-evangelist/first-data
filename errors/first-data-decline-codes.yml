@@ -1,0 +1,38 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  Derived from First Data's own First Data Gateway (IPG) client libraries —
+  https://github.com/GBSEcom/Python docs/Error.md and the
+  openapi_client/models/transaction_response.py,
+  transaction_error_response.py, payment_schedules_response.py and
+  payment_tokenization_response.py enumerations.
+decline_code_count: 0
+note: >-
+  This is a payments/authorization provider, so the artifact is in scope — but the
+  decline-code REGISTRY is not published anywhere reachable. What First Data does
+  publish, in its own generated SDKs, is the envelope field that carries the code
+  and the closed set of transaction result/state values that classify the outcome.
+  Those are recorded below. No decline code has been invented to fill the list; an
+  honest zero is the measurement.
+envelope:
+  decline_field: error.declineReasonCode
+  decline_field_description: Information about the decline reason.
+  http_status_on_decline: 422
+  http_status_description: The processor declined the transaction.
+  companion_fields: [error.code, error.message, apiTraceId]
+transaction_result_states:
+  description: >-
+    Closed enumeration of transactionResult / transactionStatus values published in
+    the SDK models. These classify an outcome; they are not decline reason codes.
+  transaction_result: [APPROVED, WAITING, PARTIAL, VALIDATION_FAILED, PROCESSING_FAILED, DECLINED]
+  transaction_state: [AUTHORIZED, CAPTURED, DECLINED, CHECKED, COMPLETED_GET, INITIALIZED, PENDING, READY, TEMPLATE, SETTLED, VOIDED, WAITING]
+  payment_schedule_result: [SUCCESS, VALIDATION_FAILED, PROCESSING_FAILED, FAILURE, DECLINED]
+  tokenization_result: [DELETED, FAILED, SUCCESS, APPROVED, WAITING, VALIDATION_FAILED, DECLINED]
+decline_codes: []
+masked_to_buyer: unknown
+gaps:
+  - >-
+    The decline-reason-code reference is behind the merchant-boarded documentation
+    on developer.fiserv.com, which renders client-side and returns an identical
+    6,217-byte SPA shell for every path — including paths that cannot exist — so
+    no code table could be read.

@@ -1,0 +1,90 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  Derived from First Data's own First Data Gateway (IPG) client libraries —
+  https://github.com/GBSEcom/Python (openapi_client/models/*, docs/*.md) and
+  https://github.com/GBSEcom/java (README endpoint table). Every `conforms: true`
+  below points at a named model or operation in that first-party material.
+note: >-
+  The First Data Gateway publishes no OpenAPI at a reachable URL and no compliance
+  or certification page on any First Data host, so this file asserts only what the
+  contract itself declares through its own model and operation names. No
+  certification is claimed on First Data's behalf and no `Compliance` pointer is
+  emitted: PCI DSS attestation for the acquiring platform is a real thing that
+  Fiserv holds, but it is not published on a First Data surface this pass could
+  reach, and a compliance claim we cannot cite is not a claim we make.
+standards:
+  - id: 3-d-secure
+    name: EMV 3-D Secure
+    conforms: true
+    domain_standard: true
+    evidence: >-
+      PATCH /v2/payments/{transaction-id} — "Update a 3DSecure or UnionPay payment
+      and continue processing" — plus the ACSResponse, AuthenticationResult,
+      AuthenticationRequest and AuthenticationUpdateRequest models in
+      github.com/GBSEcom/Python/docs.
+  - id: emv
+    name: EMV card-present / card data
+    conforms: true
+    domain_standard: true
+    evidence: >-
+      Card, CardFunction, CardInfo and the card-verification operation
+      (POST /v2/card-verification) in the published contract.
+  - id: pci-dss
+    name: PCI DSS
+    conforms: unknown
+    evidence: null
+    note: >-
+      Not asserted. Payment.js exists specifically to keep raw PAN off merchant
+      infrastructure, which is a PCI-scope-reduction design, but no PCI DSS
+      attestation or certification page was found on any First Data host during
+      the 2026-09-09 probe. Recorded as unknown rather than true.
+  - id: iso-4217
+    name: ISO 4217 currency codes
+    conforms: true
+    evidence: Amount / AmountComponents models carry a `currency` field; the published example uses "USD".
+  - id: nacha-ach
+    name: US ACH (NACHA)
+    conforms: true
+    domain_standard: true
+    evidence: >-
+      AchSaleTransaction, AchCreditTransaction, AchPreAuthTransaction,
+      AchPostAuthTransaction, AchReturnTransaction, AchVoidTransaction,
+      AchRecurringType and AchResponse models, plus the Connect Pay / TeleCheck SDK.
+  - id: level-3-industry-addenda
+    name: Card industry addenda (airline / lodging / car rental Level 3 data)
+    conforms: true
+    evidence: Airline, AirlineTravelRoute, AirlineAncillaryServiceCategory, CarRental and CarRentalExtraCharges models.
+  - id: dcc
+    name: Dynamic Currency Conversion
+    conforms: true
+    evidence: POST /v2/exchange-rates — "Generate dynamic currency conversion transactions" — plus AvailableCurrenciesResponse.
+  - id: network-tokenization
+    name: Payment tokenization
+    conforms: true
+    evidence: PaymentTokenApi — POST/GET/PATCH/DELETE /v2/payment-tokens.
+  - id: alternative-payment-methods
+    name: Alternative payment methods (AliPay, Bancontact, China domestic)
+    conforms: true
+    evidence: AliPayPaymentMethod, BancontactQR, ChinaDomesticPaymentMethod, ApmPaymentMethod models.
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 security scheme is declared; authentication is Api-Key plus an HMAC-SHA256 Message-Signature.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors are a vendor JSON envelope (ErrorResponse), not application/problem+json.
+  - id: idempotency
+    conforms: true
+    evidence: >-
+      Client-Request-Id is a required header on every operation and is documented
+      as "also used for idempotency control". See conventions/first-data-conventions.yml.
+  - id: pagination
+    conforms: false
+    evidence: No collection-listing operation exists in the published surface.
+  - id: psd2-sca
+    conforms: unknown
+    note: >-
+      The 3-D Secure surface is the mechanism SCA would ride on, but no PSD2/SCA
+      claim is published on a reachable First Data surface. Not asserted.

@@ -1,0 +1,160 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  Public package registries (npm, PyPI, RubyGems, NuGet, Packagist, Maven Central)
+  and the First Data / GBSEcom GitHub organizations. First-party status confirmed
+  from registry maintainer records (npm maintainer justin.slingerland@firstdata.com
+  on @firstdata/first-data-gateway; npm maintainer payeezy.api@firstdata.com on
+  payeezy) and from the @firstdata / first-data / GBSEcom namespaces.
+note: >-
+  First Data merged into Fiserv in 2019. The First Data Gateway (IPG) client
+  libraries are published under the GBSEcom ("Global Business Solutions
+  eCommerce") organization, which is First Data's own eCommerce engineering org —
+  the packages carry the @firstdata / first-data / FirstData.Gateway names and
+  their descriptions say "First Data's IPG API (version 21.5.0)". Every one of the
+  six first-party gateway SDKs was last published on 2021-11-19, and no release has
+  followed in the four years since; Fiserv has since directed First Data and
+  Payeezy gateway merchants to Commerce Hub. The dated release floor is the
+  strongest abandonment signal available for this surface.
+packages:
+  - language: java
+    registry: maven
+    name: com.github.GBSEcom:first-data-gateway
+    url: https://central.sonatype.com/artifact/com.github.GBSEcom/first-data-gateway
+    install: 'implementation "com.github.GBSEcom:first-data-gateway:1.15.0"'
+    source: https://github.com/GBSEcom/java
+    official: true
+    version: 1.15.0
+    published: '2021-11-18'
+    note: 22 published versions. README titles it "First Data Gateway — Payment Gateway API Specification, API version 21.5.0".
+  - language: typescript
+    registry: npm
+    name: "@firstdata/first-data-gateway"
+    url: https://www.npmjs.com/package/@firstdata/first-data-gateway
+    install: npm install @firstdata/first-data-gateway
+    source: https://github.com/GBSEcom/NPM
+    official: true
+    version: 1.14.0
+    published: '2021-11-19'
+    note: >-
+      20 published versions. Registry maintainer list includes
+      justin.slingerland@firstdata.com, which is what establishes first-party.
+  - language: python
+    registry: pypi
+    name: first-data-gateway
+    url: https://pypi.org/project/first-data-gateway/
+    install: pip install first_data_gateway
+    source: https://github.com/GBSEcom/Python
+    official: true
+    version: 1.14.0
+    published: '2021-11-19'
+    note: 'Declared home page is https://docs.firstdata.com/org/gateway, a host that no longer resolves (NXDOMAIN, checked 2026-09-09).'
+  - language: ruby
+    registry: rubygems
+    name: first_data_gateway
+    url: https://rubygems.org/gems/first_data_gateway
+    install: gem install first_data_gateway
+    source: https://github.com/GBSEcom/Ruby
+    official: true
+    version: 1.14.0
+    published: '2021-11-19'
+  - language: csharp
+    registry: nuget
+    name: FirstData.Gateway
+    url: https://www.nuget.org/packages/FirstData.Gateway
+    install: dotnet add package FirstData.Gateway
+    source: https://github.com/GBSEcom/DotNet
+    official: true
+    version: 1.14.0
+    published: '2021-11-19'
+    note: 19 published versions; ".Net Standard 2.0 SDK to be used with First Data's IPG API (version 21.5.0)".
+  - language: php
+    registry: packagist
+    name: first-data/gateway
+    url: https://packagist.org/packages/first-data/gateway
+    install: composer require first-data/gateway
+    source: https://github.com/GBSEcom/PHP
+    official: true
+    version: v1.14.0
+    published: '2021-11-19'
+  - language: javascript
+    registry: npm
+    name: payeezy
+    url: https://www.npmjs.com/package/payeezy
+    install: npm install payeezy
+    source: https://github.com/payeezy/payeezy_direct_API
+    official: true
+    version: 1.0.4
+    published: '2015-10-28'
+    note: >-
+      Legacy Payeezy gateway binding. First-party by registry maintainer record
+      (payeezy.api@firstdata.com). Superseded by the First Data Gateway SDKs and
+      by Fiserv Commerce Hub; no release in eleven years.
+  - language: php
+    registry: packagist
+    name: payeezy/payeezy-php
+    url: https://packagist.org/packages/payeezy/payeezy-php
+    install: composer require payeezy/payeezy-php
+    source: https://github.com/payeezy/payeezy-php
+    official: true
+    version: v1.0-alpha1
+    published: '2016-07-18'
+    note: Only one tagged release, still marked alpha. 174,593 lifetime downloads.
+  - language: java
+    registry: github
+    name: payeezy_java_sdk
+    url: https://github.com/payeezy/payeezy_java_sdk
+    install: 'git clone https://github.com/payeezy/payeezy_java_sdk'
+    official: true
+    version: null
+    published: null
+    note: >-
+      Source-only distribution — no Maven Central coordinate found, so there is no
+      registry metadata endpoint to read a version from. Last commit pushed
+      2019-01-10.
+  - language: swift
+    registry: github
+    name: GBSEcom/ApplePaySDK
+    url: https://github.com/GBSEcom/ApplePaySDK
+    install: 'git clone https://github.com/GBSEcom/ApplePaySDK'
+    official: true
+    version: null
+    published: null
+    note: Source-only iOS SDK; no CocoaPods/SPM registry entry located. Last pushed 2021-07-27.
+  - language: java
+    registry: github
+    name: GBSEcom/GooglePaySDK
+    url: https://github.com/GBSEcom/GooglePaySDK
+    install: 'git clone https://github.com/GBSEcom/GooglePaySDK'
+    official: true
+    version: null
+    published: null
+    note: Source-only Android SDK; no Maven coordinate located. Last pushed 2021-07-26.
+  - language: kotlin
+    registry: github
+    name: GBSEcom/connectpay_telecheck_sdk
+    url: https://github.com/GBSEcom/connectpay_telecheck_sdk
+    install: 'git clone https://github.com/GBSEcom/connectpay_telecheck_sdk'
+    official: true
+    version: null
+    published: null
+    note: Connect Pay / TeleCheck ACH SDK, source-only. Last pushed 2019-12-04.
+not_first_party:
+  - name: firstapi-sdk
+    registry: npm
+    url: https://www.npmjs.com/package/firstapi-sdk
+    reason: >-
+      Points at the GBSEcom/NPM repository but is published under an individual
+      npm account with no firstdata.com maintainer on the record; excluded rather
+      than credited as official.
+  - name: payeezy (rubygems)
+    registry: rubygems
+    url: https://rubygems.org/gems/payeezy
+    reason: Community binding; no First Data maintainer on the gem record.
+organizations:
+  - url: https://github.com/GBSEcom
+    role: First Data eCommerce SDK publisher (First Data Gateway / IPG clients, Payment.js integrations, wallet SDKs)
+  - url: https://github.com/payeezy
+    role: Payeezy gateway SDKs and sandbox test data
+  - url: https://github.com/firstdata
+    role: First Data Marketplace / PFAC demos and samples

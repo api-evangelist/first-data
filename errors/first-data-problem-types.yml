@@ -1,0 +1,110 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  Derived from First Data's own First Data Gateway (IPG) client libraries —
+  https://github.com/GBSEcom/Python docs/PaymentApi.md, docs/OrderApi.md,
+  docs/ErrorResponse.md, docs/Error.md, docs/ErrorDetails.md and the
+  TransactionErrorResponse / PaymentSchedulesErrorResponse /
+  PaymentTokenizationErrorResponse / PaymentUrlErrorResponse model reference. The
+  status list and every description string below are carried verbatim in that
+  first-party generated documentation.
+format: vendor
+rfc9457: false
+note: >-
+  The First Data Gateway does not emit application/problem+json. Errors are a
+  vendor JSON envelope. There is no published registry of `error.code` values
+  reachable without merchant credentials, so this catalog records the HTTP-status
+  layer and the envelope, and does not invent codes.
+envelope:
+  media_type: application/json
+  fields:
+    - name: clientRequestId
+      description: Echoes back the value in the request header for tracking.
+    - name: apiTraceId
+      description: Request identifier in API, can be used to request logs from the support team.
+    - name: responseType
+      description: Result classification for the request.
+    - name: error.code
+      description: Uniquely identifies an error condition. Client applications need to read and handle errors based on this.
+    - name: error.message
+      description: A generic description of the error condition.
+    - name: error.details
+      description: Detailed information about message format errors.
+    - name: error.declineReasonCode
+      description: Information about the decline reason.
+  variants:
+    - ErrorResponse
+    - TransactionErrorResponse
+    - OrderErrorResponse
+    - PaymentSchedulesErrorResponse
+    - PaymentTokenizationErrorResponse
+    - PaymentUrlErrorResponse
+    - FraudRegistrationError
+problems:
+  - status: 400
+    title: The request cannot be validated.
+    remediation: >-
+      Read error.details for the offending field. Most commonly a malformed
+      transaction body or a missing required header.
+    retryable: false
+  - status: 401
+    title: The request cannot be authenticated or was submitted with the wrong credentials.
+    remediation: >-
+      Recompute Message-Signature over Api-Key + Client-Request-Id + Timestamp +
+      body with the API Secret, and confirm Timestamp is within the 5-minute
+      validity window. A stale Timestamp presents as 401, not as a timeout.
+    retryable: true
+  - status: 403
+    title: The request was unauthorized.
+    remediation: The key is valid but not entitled to this operation or store. Escalate to merchant boarding.
+    retryable: false
+  - status: 404
+    title: The requested resource doesn't exist.
+    remediation: Verify the transaction-id / order-id path parameter.
+    retryable: false
+  - status: 409
+    title: >-
+      The attempted action is not valid according to gateway rules. For example,
+      the merchant is not set-up or the order already exists.
+    remediation: >-
+      Do NOT blind-retry. A duplicate order is one of the two documented causes,
+      so re-sending with the SAME Client-Request-Id is the correct replay; a NEW
+      Client-Request-Id would create a second order.
+    retryable: false
+  - status: 415
+    title: Format that is not supported by the server for the HTTP method.
+    remediation: Set Content-Type to application/json.
+    retryable: false
+  - status: 422
+    title: The processor declined the transaction.
+    remediation: >-
+      Not a client error — the issuer or processor declined. Read
+      error.declineReasonCode. See errors/first-data-decline-codes.yml.
+    retryable: false
+  - status: 500
+    title: An unexpected internal server error occurred.
+    remediation: Retry with the same Client-Request-Id under exponential backoff; capture apiTraceId for support.
+    retryable: true
+  - status: 502
+    title: There was a problem communicating with the endpoint.
+    remediation: >-
+      Upstream processor unreachable; the transaction's final state is UNKNOWN.
+      Replay with the same Client-Request-Id rather than issuing a new
+      transaction, then inquire via GET /v2/payments/{transaction-id}.
+    retryable: true
+applies_to:
+  - PaymentApi
+  - OrderApi
+  - PaymentSchedulesApi
+  - PaymentTokenApi
+  - PaymentUrlApi
+  - VerificationApi
+  - CurrencyConversionApi
+  - FraudDetectApi
+  - InformationLookupApi
+  - AuthenticationApi
+gaps:
+  - >-
+    The `error.code` value registry is not published on any reachable surface.
+    developer.fiserv.com renders client-side and docs.firstdata.com no longer
+    resolves, so the code list could not be harvested and has not been guessed.

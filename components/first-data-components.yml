@@ -1,0 +1,73 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://docs.paymentjs.firstdata.com/, the GBSEcom GitHub organization
+  (pjsv2_example, PaymentJs-Java-Integration, paymentjs-integration-nodejs,
+  paymentJS_php_integration, ApplePaySDK, GooglePaySDK, IPG_.NET_Connect), and
+  the First Data Gateway payment-url operations.
+summary: >-
+  First Data's client-side surface is Payment.js (hosted card fields that keep the
+  merchant page out of PCI scope), the IPG Connect / payment-url hosted payment
+  page, and the wallet SDKs. Payment.js still has its own live documentation host
+  under the firstdata.com domain, which is the last First Data-branded
+  documentation property still answering.
+families:
+  - name: Payment.js (PaymentJS v2)
+    kind: hosted-fields
+    description: >-
+      Client-side JavaScript that renders First Data-hosted card input fields into
+      the merchant's own checkout page and exchanges the entered card for a gateway
+      token, so raw PAN never touches merchant infrastructure.
+    docs: https://docs.paymentjs.firstdata.com/
+    docs_note: >-
+      Live 2026-09-09 (HTTP 200) but a client-rendered single-page app — a 425-byte
+      shell plus /index.js — so the page content is not machine-readable.
+    environments: [uat, prod]
+    integrations:
+      - language: nodejs
+        url: https://github.com/GBSEcom/pjsv2_example
+      - language: nodejs
+        url: https://github.com/GBSEcom/paymentjs-integration-nodejs
+      - language: java
+        url: https://github.com/GBSEcom/PaymentJs-Java-Integration
+      - language: php
+        url: https://github.com/GBSEcom/paymentJS_php_integration
+    webhooks: >-
+      A callback URL registered on the PaymentJS v2 developer app receives the
+      tokenization result.
+  - name: Hosted Payment Page (payment-url)
+    kind: hosted-checkout
+    description: >-
+      A gateway-generated payment URL the merchant redirects the buyer to. Created,
+      inspected and revoked through the First Data Gateway API rather than a
+      client-side library.
+    operations:
+      - POST /v2/payment-url
+      - GET /v2/payment-url
+      - DELETE /v2/payment-url
+    api: First Data Gateway (IPG) v2
+  - name: IPG Connect
+    kind: hosted-checkout
+    description: >-
+      The legacy HTTPS-POST hosted checkout for the Internet Payment Gateway.
+    integrations:
+      - language: dotnet
+        url: https://github.com/GBSEcom/IPG_.NET_Connect
+  - name: Wallet SDKs
+    kind: mobile
+    description: Apple Pay and Google Pay acceptance components for the First Data Gateway.
+    integrations:
+      - platform: ios
+        url: https://github.com/GBSEcom/ApplePaySDK
+      - platform: android
+        url: https://github.com/GBSEcom/GooglePaySDK
+      - platform: ios
+        url: https://github.com/payeezy/payeezy_apple_pay
+      - platform: android
+        url: https://github.com/payeezy/payeezy_android_pay
+loaders:
+  - name: Payment.js client library
+    note: >-
+      The loader script URL is issued per developer app rather than published as a
+      fixed CDN path, so no pinned version can be recorded here.
+    version: null

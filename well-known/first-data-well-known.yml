@@ -1,0 +1,378 @@
+generated: '2026-09-09'
+method: probed
+source: 'Live HTTP probes issued 2026-09-09 against every host this record knows: the legacy First
+  Data registrable domain and www, the Payeezy domain and www, the retired developer host, the Fiserv
+  developer portal and corporate site that the record''s DeveloperPortal/Website pointers name, and
+  the four First Data Gateway (IPG) / Payeezy API hosts named by First Data''s own SDKs.'
+hit_count: 0
+summary: 'Zero documents. No security.txt, no OpenID/OAuth discovery, no api-catalog, no apis.json,
+  no ai-plugin and no agent card is served on any First Data host. Every 2xx observed was an HTML
+  shell, not a document: firstdata.com answers 301 to merchants.fiserv.com for every path including
+  the negative control; www.fiserv.com answers 406 to a browser User-Agent for every path including
+  the negative control; prod.api.firstdata.com, cert.api.firstdata.com and api-cert.payeezy.com return
+  a 1,994-3,213 byte Radware bot-manager interstitial (<HTML><HEAD><base href="/">) on two paths;
+  api.globalgatewaye4.firstdata.com answers 401 with a gateway error envelope on every path including
+  the negative control; developer.firstdata.com answers 503 "P - unknown path!" on every path. No
+  WellKnown or SecurityTxt pointer is emitted, because the probe records an absence, not a presence.'
+path_echo_control: passed
+path_echo_note: A negative control at /.well-known/first-data-negative-control-7f3ab91c.json was
+  issued on every host. No host returned a document there. Three hosts (firstdata.com 301, www.fiserv.com
+  406, api.globalgatewaye4.firstdata.com 401, developer.firstdata.com 503) return an identical non-document
+  response to the control and to every real path, which is why their non-404 codes are recorded as
+  misses rather than hits.
+hosts:
+- host: https://firstdata.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 301
+  - path: /apis.json
+    status: 301
+  - path: /.well-known/api-catalog
+    status: 301
+  - path: /.well-known/oauth-protected-resource
+    status: 301
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+  - path: /.well-known/apis.json
+    status: 301
+  - path: /.well-known/aauth-resource.json
+    status: 301
+  - path: /.well-known/ai-plugin.json
+    status: 301
+  - path: /.well-known/agent-card.json
+    status: 301
+  - path: /.well-known/security.txt
+    status: 301
+  - path: /.well-known/agent.json
+    status: 301
+  - path: /apis.yml
+    status: 301
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 301
+- host: https://www.firstdata.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 404
+- host: https://payeezy.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 0
+  - path: /.well-known/openid-configuration
+    status: 0
+  - path: /.well-known/oauth-authorization-server
+    status: 0
+  - path: /.well-known/api-catalog
+    status: 0
+  - path: /.well-known/oauth-protected-resource
+    status: 0
+  - path: /.well-known/aauth-resource.json
+    status: 0
+  - path: /.well-known/ai-plugin.json
+    status: 0
+  - path: /.well-known/apis.json
+    status: 0
+  - path: /apis.json
+    status: 0
+  - path: /apis.yml
+    status: 0
+  - path: /.well-known/agent-card.json
+    status: 0
+  - path: /.well-known/agent.json
+    status: 0
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 0
+- host: https://www.payeezy.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 0
+  - path: /.well-known/openid-configuration
+    status: 0
+  - path: /.well-known/oauth-authorization-server
+    status: 0
+  - path: /.well-known/oauth-protected-resource
+    status: 0
+  - path: /.well-known/api-catalog
+    status: 0
+  - path: /.well-known/ai-plugin.json
+    status: 0
+  - path: /.well-known/aauth-resource.json
+    status: 0
+  - path: /.well-known/apis.json
+    status: 0
+  - path: /apis.json
+    status: 0
+  - path: /apis.yml
+    status: 0
+  - path: /.well-known/agent-card.json
+    status: 0
+  - path: /.well-known/agent.json
+    status: 0
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 0
+- host: https://developer.firstdata.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 503
+  - path: /.well-known/openid-configuration
+    status: 503
+  - path: /.well-known/oauth-authorization-server
+    status: 503
+  - path: /.well-known/oauth-protected-resource
+    status: 503
+  - path: /.well-known/api-catalog
+    status: 503
+  - path: /apis.yml
+    status: 503
+  - path: /.well-known/apis.json
+    status: 503
+  - path: /apis.json
+    status: 503
+  - path: /.well-known/aauth-resource.json
+    status: 503
+  - path: /.well-known/agent.json
+    status: 503
+  - path: /.well-known/ai-plugin.json
+    status: 503
+  - path: /.well-known/agent-card.json
+    status: 503
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 503
+- host: https://developer.fiserv.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.yml
+    status: 200
+    note: 200 returned an HTML shell, not a document — treated as a miss
+  - path: /apis.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 404
+- host: https://www.fiserv.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 406
+  - path: /.well-known/openid-configuration
+    status: 406
+  - path: /.well-known/oauth-authorization-server
+    status: 406
+  - path: /.well-known/oauth-protected-resource
+    status: 406
+  - path: /.well-known/api-catalog
+    status: 406
+  - path: /.well-known/aauth-resource.json
+    status: 406
+  - path: /.well-known/ai-plugin.json
+    status: 406
+  - path: /.well-known/apis.json
+    status: 406
+  - path: /apis.json
+    status: 406
+  - path: /apis.yml
+    status: 406
+  - path: /.well-known/agent-card.json
+    status: 406
+  - path: /.well-known/agent.json
+    status: 406
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 406
+- host: https://prod.api.firstdata.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: 200 returned an HTML shell, not a document — treated as a miss
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.yml
+    status: 200
+    note: 200 returned an HTML shell, not a document — treated as a miss
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 404
+- host: https://cert.api.firstdata.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: 200 returned an HTML shell, not a document — treated as a miss
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 200
+    note: 200 returned an HTML shell, not a document — treated as a miss
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 404
+- host: https://api.payeezy.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 404
+- host: https://api-cert.payeezy.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: 200 returned an HTML shell, not a document — treated as a miss
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 200
+    note: 200 returned an HTML shell, not a document — treated as a miss
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 404
+- host: https://api.globalgatewaye4.firstdata.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/oauth-protected-resource
+    status: 401
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+  - path: /apis.json
+    status: 401
+  - path: /.well-known/aauth-resource.json
+    status: 401
+  - path: /.well-known/apis.json
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /apis.yml
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401
+  negative_control:
+    path: /.well-known/first-data-negative-control-7f3ab91c.json
+    status: 401

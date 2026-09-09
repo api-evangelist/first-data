@@ -1,0 +1,132 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  Live probes 2026-09-09 plus First Data's own published SDKs and the Fiserv
+  developer-portal sitemap.
+status: legacy-retiring
+summary: >-
+  Every First Data-branded developer surface is in wind-down. The First Data
+  Gateway (IPG) survives on the Fiserv portal as the IPGNA product; Payeezy does
+  not appear in the portal sitemap at all; the developer hosts, the status page and
+  the SDK release stream are all decommissioned or frozen.
+versioning:
+  scheme: uri-path
+  current: v2
+  api_version: 21.5.0
+  base_urls:
+    production: https://prod.api.firstdata.com/gateway/v2
+    certification: https://cert.api.firstdata.com/gateway/v2
+  source: https://github.com/GBSEcom/Python
+  policy_url: null
+  policy_note: No published version-support or breaking-change policy was found on any reachable host.
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  gateway_deprecation:
+    statement: First Data and Payeezy gateways will be deprecated at the end of Q3 2025, as mandated by Fiserv.
+    effective: '2025-09-30'
+    successor: Fiserv Commerce Hub
+    source: https://docs.recurly.com/recurly-subscriptions/docs/commerce-hub
+    source_type: third-party
+    source_note: >-
+      Recorded from a payments platform's integration documentation attributing the
+      mandate to Fiserv. Fiserv's own migration guides exist on
+      developer.fiserv.com under
+      /product/CommerceHub/docs/?path=docs/Resources/Guides/Payeezy/ but that portal
+      renders client-side and returns an identical 6,217-byte SPA shell for every
+      path, so no first-party dated statement could be read directly. The date is
+      therefore recorded as third-party attribution, not as a first-party claim.
+  migration_guides:
+    - https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/Guides/Payeezy/Payeezy-UpgradetoCH-TechnicalAPI.md
+    - https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/Guides/Payeezy/Payeezy-UpgradetoCH-FeaturesTokens.md
+    - https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/Guides/Payeezy/Payeezy-UpgradetoCH-Features3DS.md
+    - https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/Guides/Payeezy/Payeezy-CHEmulation.md
+    - https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/Guides/Payeezy/Payeezy-UpgradetoCH-FAQs.md
+status_page:
+  url: null
+  former_url: https://status.firstdata.com
+  state: decommissioned
+  evidence:
+    - url: https://status.firstdata.com
+      status: 200
+      resolves_to: https://firstdata.statuspage.io/inactive
+      note: >-
+        First Data's Statuspage still resolves but has been marked inactive by
+        Atlassian, so the host answers 200 with an "inactive page" notice rather
+        than component status. No StatusPage pointer is emitted — the page exists
+        but publishes no status.
+    - url: https://fiserv.statuspage.io
+      status: 200
+      resolves_to: https://fiserv.statuspage.io/inactive
+    - url: https://status.fiserv.com
+      status: 0
+      note: does not resolve
+sla:
+  url: null
+  note: No public SLA. Availability commitments sit inside the merchant services agreement.
+retired_hosts:
+  - host: docs.firstdata.com
+    state: nxdomain
+    checked: '2026-09-09'
+    note: >-
+      Still declared as the home page of the live PyPI and RubyGems packages
+      (first-data-gateway / first_data_gateway), which therefore ship a dead
+      documentation link to every installer.
+  - host: developer.payeezy.com
+    state: unreachable
+    checked: '2026-09-09'
+    note: Connection failure; still cited as the homepage of the rubygems `payeezy` gem.
+  - host: docs.payeezy.com
+    state: unreachable
+    checked: '2026-09-09'
+  - host: developer.firstdata.com
+    state: 503
+    checked: '2026-09-09'
+    note: >-
+      Resolves to a Volterra/F5 edge that answers 503 "P - unknown path!" for every
+      path — a routed hostname with no backend behind it.
+  - host: firstdata.com
+    state: 301
+    checked: '2026-09-09'
+    note: 301 to https://merchants.fiserv.com/ for every path, behind a Radware bot manager.
+  - host: globalgatewaye4.firstdata.com
+    state: 520
+    checked: '2026-09-09'
+live_hosts:
+  - host: prod.api.firstdata.com
+    state: live
+    note: First Data Gateway production. Root returns 404; /v1/* returns a JSON 400 envelope.
+  - host: cert.api.firstdata.com
+    state: live
+    note: First Data Gateway certification/sandbox.
+  - host: api.payeezy.com
+    state: live
+    note: 403 at root; the Payeezy transaction host is still answering.
+  - host: api-cert.payeezy.com
+    state: live
+  - host: api.globalgatewaye4.firstdata.com
+    state: live
+    note: 401 with a gateway error envelope on every path — alive and credential-gated.
+sdk_lifecycle:
+  last_release: '2021-11-19'
+  note: >-
+    All six first-party First Data Gateway SDKs (Maven, npm, PyPI, RubyGems, NuGet,
+    Packagist) were last published on 2021-11-18/19. No release in the four years
+    since. See packages/first-data-packages.yml.
+product_status:
+  - product: IPGNA (Internet Payment Gateway, North America)
+    portal: https://developer.fiserv.com/product/IPGNA
+    listed_in_sitemap: true
+    note: The First Data Gateway's surviving home on the Fiserv developer portal.
+  - product: FirstVision (APAC / EMEA / LATAM)
+    portal: https://developer.fiserv.com/product/FirstVisionAPAC
+    listed_in_sitemap: true
+    note: Legacy First Data card-issuing platform, still carried as three regional products.
+  - product: Payeezy
+    portal: https://developer.fiserv.com/product/Payeezy
+    listed_in_sitemap: false
+    note: >-
+      Absent from https://developer.fiserv.com/sitemap.xml (checked 2026-09-09).
+      The URL returns 200 only because the portal is a single-page app that answers
+      every path with the same shell. Treated as retired.
+deprecated_operations: []

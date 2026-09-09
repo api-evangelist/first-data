@@ -1,0 +1,71 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://github.com/GBSEcom/Python (README getting-started payload,
+  simple/client_context.py), https://github.com/GBSEcom/java (README
+  getting-started), https://github.com/GBSEcom/pjsv2_example (env switch).
+  All values below are published verbatim by First Data; none were invented.
+summary: >-
+  The First Data Gateway separates test from live by HOST, not by key prefix. The
+  certification host is the SDK default, so an integrator who does nothing is in
+  the sandbox — an unusually safe default. Credentials are not self-service: an
+  API Key and API Secret are issued through merchant boarding, so the sandbox is
+  reachable only after a sales conversation.
+environments:
+  - name: certification
+    role: sandbox
+    base_url: https://cert.api.firstdata.com/gateway/v2
+    default: true
+    note: >-
+      ClientContext defaults to CERT; PROD must be selected explicitly
+      (Gateway.create(creds, env="PROD")). The Java SDK's DEFAULT_BASE_PATH is the
+      cert host as well.
+  - name: production
+    role: live
+    base_url: https://prod.api.firstdata.com/gateway/v2
+    default: false
+key_separation:
+  mechanism: host
+  test_key_prefix: null
+  live_key_prefix: null
+  note: >-
+    No test-vs-live key prefix is published. The same Api-Key / API Secret shape is
+    used in both environments and the environment is chosen by base URL, which
+    means a mis-set base URL, not a mis-set key, is the way a test transaction
+    reaches production.
+test_values:
+  - kind: payment card
+    number: '4012000033330026'
+    expiry_month: '12'
+    expiry_year: '25'
+    security_code: '977'
+    amount: '25.01'
+    currency: USD
+    request_type: PaymentCardSaleTransaction
+    source: https://github.com/GBSEcom/Python
+    note: >-
+      The only test instrument First Data publishes on a reachable surface. Its
+      stated expiry (12/25) is now in the past, so the published example no longer
+      runs as written — an integrator has to guess a future expiry date.
+test_clocks:
+  supported: false
+fixtures_and_triggers:
+  published: false
+  note: >-
+    No decline-simulation amounts, trigger values or fixture tooling could be found
+    on any reachable host. The full test-value table lives in the merchant-boarded
+    documentation on developer.fiserv.com, which renders client-side.
+paymentjs:
+  environments: [uat, prod]
+  source: https://github.com/GBSEcom/pjsv2_example
+  docs: https://docs.paymentjs.firstdata.com/
+onboarding:
+  self_serve: false
+  note: >-
+    Sandbox credentials require merchant boarding and Apigee app provisioning; the
+    Region header's documentation states "Region specific store setup and APIGEE
+    boarding is required".
+gaps:
+  - No published test bank account / ACH test values.
+  - No published 3-D Secure test cards, despite a 3DS surface (PATCH /payments/{transaction-id}).
+  - No documented way to simulate a decline or a dispute.
