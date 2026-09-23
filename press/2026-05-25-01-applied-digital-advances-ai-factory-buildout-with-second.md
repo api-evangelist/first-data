@@ -1,7 +1,9 @@
 ---
 title: Applied Digital Advances AI Factory Buildout with Second ...
 url: https://ir.applieddigital.com/news-events/press-releases/detail/135/applied-digital-advances-ai-factory-buildout-with-second
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"First Data" press release artificial intelligence'
 position: 1
 source: serpapi-google

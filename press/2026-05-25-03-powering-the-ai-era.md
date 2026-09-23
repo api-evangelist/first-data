@@ -1,7 +1,9 @@
 ---
 title: Powering the AI Era
 url: https://www.goldmansachs.com/what-we-do/investment-banking/insights/articles/powering-the-ai-era/report.pdf
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"First Data" press release artificial intelligence'
 position: 3
 source: serpapi-google
