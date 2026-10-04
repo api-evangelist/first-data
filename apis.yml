@@ -38,7 +38,7 @@ position: Consuming
 tags:
   - Payments
   - Merchant Services
-  - Financial-Services
+  - Financial Services
   - Transaction Processing
   - Fortune 500
 tags_raw:
@@ -47,6 +47,7 @@ tags_raw:
   - Financial Services
   - Transaction Processing
   - Fortune 500
+  - Financial-Services
 url: >-
   https://raw.githubusercontent.com/api-evangelist/first-data/refs/heads/main/apis.yml
 specificationVersion: '0.23'
@@ -73,6 +74,12 @@ apis:
   - aid: first-data:first-data-gateway
     name: First Data Gateway (IPG)
     tags:
+      - Payments
+      - Merchant Services
+      - Transaction Processing
+      - Tokenization
+      - Fraud Prevention
+    tags_raw:
       - Payments
       - Merchant Services
       - Transaction Processing
