@@ -86,3 +86,31 @@ plans:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units:
+  - period
+  - transaction
+  plans:
+  - name: Sandbox / Developer
+    access: freemium
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods:
+    - month
+  - name: Merchant Services (Custom)
+    access: enterprise
+    model: hybrid
+    model_how: derived
+    units:
+    - period
+    - transaction
+    periods:
+    - month
+    - per-use
