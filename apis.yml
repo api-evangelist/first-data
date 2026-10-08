@@ -114,6 +114,8 @@ apis:
       no OpenAPI document is served at any reachable URL. API version 21.5.0.
       Authentication is an Api-Key header plus an HMAC-SHA256 Message-Signature.
 common:
+  - type: FinOps
+    url: finops/first-data-finops.yml
   - type: DomainSecurity
     url: security/first-data-domain-security.yml
   - type: GitHubOrganization
