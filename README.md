@@ -64,26 +64,106 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-This is a repository for tracking the APIs, SDKs, and other developer resources for First Data, now part of Fiserv following their 2019 merger.
+First Data was a global payment technology solutions company providing merchant transaction processing, financial institution services, and prepaid services before merging with Fiserv in 2019. Legacy First Data API products including Payeezy, Bolt, and Commerce Hub are now part of the Fiserv developer portal.
 
-First Data was a global payment technology solutions company providing merchant transaction processing, financial institution services, and prepaid services. Its API products are now offered through Fiserv.
+**Areas:** Payments · Merchant Services · Financial Services · Transaction Processing · Fortune 500
 
-## APIs
+## First Data (Fiserv) on APIs.io
 
-### Fiserv Developer (First Data Legacy)
+Everything profiled for First Data (Fiserv) is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/first-data/](https://apis.io/providers/first-data/)** — or go straight to one of the APIs or properties below.
 
-Legacy First Data API products including Commerce Hub, Payeezy, and Bolt are now hosted on the Fiserv developer portal.
+### APIs (2)
 
-- **Developer Portal:** [https://developer.fiserv.com](https://developer.fiserv.com)
+- [Fiserv Developer (First Data Legacy)](https://apis.io/apis/first-data/fiserv-developer/) — Following the Fiserv merger, legacy First Data API products are now hosted on the Fiserv developer portal. These include Commerce Hub, Payeezy, and Bolt for…
+- [First Data Gateway (IPG)](https://apis.io/apis/first-data/first-data-gateway/) — The First Data Gateway, marketed by Fiserv as the Internet Payment Gateway (IPG) and documented on the Fiserv developer portal as the IPGNA product. A card,…
 
-## Tags
+### Published properties
 
-- Payments
-- Merchant Services
-- Financial Services
-- Transaction Processing
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Properties
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [First Data Authentication](https://apis.io/security/first-data/first-data-authentication/)
+- [First Data Domain Security](https://apis.io/security/first-data/first-data-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [First Data Plans Pricing](https://apis.io/plans/first-data/first-data-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [First Data Rate Limits](https://apis.io/rate-limits/first-data/first-data-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [First Data Finops](https://apis.io/finops/first-data/first-data-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.fiserv.com)
-- [Developer Portal](https://developer.fiserv.com)
+- [API reference](https://developer.fiserv.com/product/IPGNA)
+- [Support](https://developer.fiserv.com/support)
+- [GitHub](https://github.com/firstdata)
+
+## API Evangelist rating
+
+**Kin Score 16.7** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 0.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 15.8 |
+| Developer ergonomics | 35.7 |
+| Access clarity | 5.3 |
+
+**Agent readiness 7.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 20.5** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/first-data/](https://apis.io/providers/first-data/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for First Data (Fiserv): the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/first-data/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
