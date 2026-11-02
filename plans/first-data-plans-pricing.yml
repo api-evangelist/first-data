@@ -1,0 +1,116 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: First Data (Fiserv)
+providerId: first-data
+created: '2026-05-04'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+method: generated
+modified: '2026-05-05'
+reconciled: false
+tags:
+  - Payments
+  - Merchant Services
+  - Financial Services
+  - Transaction Processing
+description: First Data is now part of Fiserv (acquired 2019). Public access to Fiserv developer APIs (Commerce Hub, Carat, Cash Flow Central, etc.) is gated behind merchant onboarding. Pricing is custom-negotiated per merchant agreement and is not publicly listed; merchant discount rate (MDR), per-transaction fees, monthly fees, and gateway/PCI fees are scoped on the merchant services contract. The developer portal exposes documentation and sandbox access at developer.fiserv.com without published rate cards.
+notes: No public pricing page exists for Fiserv/First Data merchant APIs. Pricing is contract-only. Scaffold trimmed to a single sandbox + custom enterprise plan; remove or replace if/when Fiserv publishes a developer pricing page.
+sources:
+  - https://developer.fiserv.com/
+  - https://developer.fiserv.com/product/CommerceHub
+  - https://docs.fiserv.dev/public/reference/apis
+plans:
+  - id: first-data-sandbox
+    name: Sandbox / Developer
+    type: freemium
+    description: Free developer-portal account at developer.fiserv.com providing access to Commerce Hub and other Fiserv API documentation, OpenAPI references, and sandbox credentials for non-production testing. No live transaction processing.
+    entries:
+      - label: Sandbox Access
+        description: Non-production sandbox testing for Commerce Hub and related Fiserv APIs
+        name: sandbox_access
+        type: flat
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        domains:
+          - https://developer.fiserv.com
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Public Documentation
+      - name: Sandbox Credentials
+      - name: Code Samples (Fiserv/commercehub-api-examples)
+      - name: Fiserv Developer (First Data Legacy)
+  - id: first-data-merchant-services
+    name: Merchant Services (Custom)
+    type: enterprise
+    description: Production merchant agreement with Fiserv covering Commerce Hub, Carat, and legacy First Data gateway products. Pricing is negotiated per merchant — typically a blended merchant discount rate plus per-transaction fees, monthly fees, gateway fees, and any value-add services (tokenization, risk, 3DS). Not publicly disclosed.
+    entries:
+      - label: Card Transactions
+        description: Per-transaction processing fee — negotiated per merchant agreement
+        name: card_transactions
+        type: metered
+        metric: transaction
+        limit: -1
+        timeFrame: usage
+        geo: global
+        domains:
+          - https://prod.api.firstdata.com
+          - https://api.commercehub.fiserv.com
+        unit: 1
+        price: contact sales
+        userMultiplied: false
+      - label: Gateway / Platform Fees
+        description: Monthly platform, gateway, and PCI fees per merchant agreement
+        name: platform_fees
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        domains: []
+        unit: 1
+        price: contact sales
+        userMultiplied: false
+    elements:
+      - name: Production Commerce Hub Access
+      - name: Carat / Omni-Commerce Platform
+      - name: Tokenization & Vault
+      - name: 3-D Secure 2.x
+      - name: Risk and Fraud Tools
+      - name: Settlement and Reporting
+      - name: Named Account Management
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units:
+  - period
+  - transaction
+  plans:
+  - name: Sandbox / Developer
+    access: freemium
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods:
+    - month
+  - name: Merchant Services (Custom)
+    access: enterprise
+    model: hybrid
+    model_how: derived
+    units:
+    - period
+    - transaction
+    periods:
+    - month
+    - per-use
